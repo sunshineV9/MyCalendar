@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCalendar.iOS", "MyCalenda
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{1ED0D14E-DA8B-401A-A574-A0BB98A0BCC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCalendar.Core", "MyCalendar.Core\MyCalendar.Core.csproj", "{61A109AE-2F6E-4D90-A094-98827EAE99C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCalendar.Core", "MyCalendar\MyCalendar.Core\MyCalendar.Core.csproj", "{61A109AE-2F6E-4D90-A094-98827EAE99C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
