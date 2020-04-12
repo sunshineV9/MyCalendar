@@ -11,8 +11,8 @@ jobs:
       run: |
         cd MyCalendar
         nuget restore
-        cd MyCalendar.Android
-        msbuild MyCalendar.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
+        cd MyCalendar/MyCalendar.Android
+        msbuild MyCalendar.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Release
         
   iOS:
     runs-on: macos-latest
@@ -22,4 +22,5 @@ jobs:
       run: |
         cd MyCalendar
         nuget restore
-        msbuild MyCalendar.iOS/MyCalendar.iOS.csproj /verbosity:normal /t:Rebuild /p:Platform=iPhoneSimulator /p:Configuration=Debug
+        cd MyCalendar/MyCalendar.iOS
+        msbuild MyCalendar.iOS.csproj /verbosity:normal /t:Rebuild /p:Platform=iPhoneSimulator /p:Configuration=Release
