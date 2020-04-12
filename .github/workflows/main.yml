@@ -9,9 +9,9 @@ jobs:
     - uses: actions/checkout@v1
     - name: Android
       run: |
-        cd MyCalendar/MyCalendar/MyCalendar
+        cd MyCalendar
         nuget restore
-        cd MyCalendar.Android
+        cd MyCalendar/MyCalendar/MyCalendar.Android
         msbuild MyCalendar.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Release
         
   iOS:
@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: iOS
       run: |
-        cd MyCalendar/MyCalendar/MyCalendar
+        cd MyCalendar
         nuget restore
-        cd MyCalendar.iOS
+        cd MyCalendar/MyCalendar/MyCalendar.iOS
         msbuild MyCalendar.iOS.csproj /verbosity:normal /t:Rebuild /p:Platform=iPhoneSimulator /p:Configuration=Release
