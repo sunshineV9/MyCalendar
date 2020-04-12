@@ -22,7 +22,7 @@ jobs:
         ls
     - name: Show directory to xamarin project
       run: |
-        cd MyCalendar/MyCalendar/MyCalendar
+        cd MyCalendar/MyCalendar
         ls
         
   Android:
