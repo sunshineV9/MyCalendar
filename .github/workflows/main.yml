@@ -20,6 +20,10 @@ jobs:
       run: |
         cd ..
         ls
+    - name: Show directory to xamarin project
+      run: |
+        cd MyCalendar/MyCalendar/MyCalendar
+        ls
         
   Android:
     runs-on: macos-latest
