@@ -4,6 +4,7 @@ using MyCalendar.ViewModels;
 using MyCalendar.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using MyCalendar.Contants;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace MyCalendar
@@ -23,7 +24,7 @@ namespace MyCalendar
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync(NavigationConstants.Home);
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

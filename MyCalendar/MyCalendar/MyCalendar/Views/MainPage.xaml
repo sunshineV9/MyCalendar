@@ -1,11 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<controls:MainPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MyCalendar.Controls"
              x:Class="MyCalendar.Views.MainPage"
              Title="{Binding Title}">
+    <ContentView>
+        <StackLayout>
+            <Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand" 
+                   Text="Welcome to my little squeezy funny app!"
+                   FontSize="Title" 
+                   LineBreakMode="WordWrap"/>
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
-    </StackLayout>
-
-</ContentPage>
+            <!-- Log In / Sign Up for the user -->
+            <Button HorizontalOptions="FillAndExpand" VerticalOptions="End"
+                    Text="Log In" />
+            <Button HorizontalOptions="FillAndExpand" VerticalOptions="End"
+                    Text="Sign Up" />
+        </StackLayout>
+    </ContentView>
+</controls:MainPage>
