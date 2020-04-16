@@ -2,18 +2,11 @@
 The MyCalender App is for users, who want a productive app to schedule their appointments.
 
 # Status
-**CI Pipeline:**
-<br>
-[![Build Status](https://dev.azure.com/michael-gintenreiter/MyCalendar/_apis/build/status/MyCalendar%20CI?branchName=master)](https://dev.azure.com/michael-gintenreiter/MyCalendar/_build/latest?definitionId=8&branchName=master)
-<br>
-**Android:**
-<br>
+## CI Pipeline
+### Android
 [![Build Status](https://dev.azure.com/michael-gintenreiter/MyCalendar/_apis/build/status/MyCalendar%20CI?branchName=master&jobName=Android)](https://dev.azure.com/michael-gintenreiter/MyCalendar/_build/latest?definitionId=8&branchName=master)
-<br>
-**iOS**
-<br>
+### iOS
 [![Build Status](https://dev.azure.com/michael-gintenreiter/MyCalendar/_apis/build/status/MyCalendar%20CI?branchName=master&jobName=iOS)](https://dev.azure.com/michael-gintenreiter/MyCalendar/_build/latest?definitionId=8&branchName=master)
-<br>
 # Technology Stack
 - Xamarin.Forms
 - Azure Web App as backend
