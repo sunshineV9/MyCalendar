@@ -1,7 +1,7 @@
-﻿using Prism;
-using Prism.Ioc;
-using MyCalendar.Mobile.ViewModels;
+﻿using MyCalendar.Mobile.ViewModels;
 using MyCalendar.Mobile.Views;
+using Prism;
+using Prism.Ioc;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
