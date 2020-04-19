@@ -1,4 +1,6 @@
 ﻿using MyCalendar.Mobile.Common.Services;
+using MyCalendar.Mobile.Common.Services.Authentication;
+using MyCalendar.Mobile.Common.Services.RestService;
 using MyCalendar.Mobile.ViewModels;
 using MyCalendar.Mobile.Views;
 using Prism;
@@ -33,6 +35,9 @@ namespace MyCalendar.Mobile
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
 
             containerRegistry.RegisterSingleton<AppSettingsManager>();
+
+            containerRegistry.RegisterSingleton<IRestService, RestService>();
+            containerRegistry.RegisterSingleton<IAuthenticationService, AuthenticationService>();
         }
     }
 }

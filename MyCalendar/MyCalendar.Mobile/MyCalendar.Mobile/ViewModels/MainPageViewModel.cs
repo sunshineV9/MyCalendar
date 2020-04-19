@@ -1,8 +1,8 @@
-﻿using MyCalendar.Mobile.Common.Services;
+﻿using MyCalendar.Mobile.Common.Services.Authentication;
 using Prism.Navigation;
 using Prism.Services;
 using System;
-using System.Net.Http;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -12,10 +12,10 @@ namespace MyCalendar.Mobile.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        private readonly IAuthenticationService authenticationService;
         private readonly IPageDialogService dialogService;
 
         private bool loggedIn;
-        private readonly AppSettingsManager appSettingsManager;
 
         public bool LoggedIn
         {
@@ -28,12 +28,12 @@ namespace MyCalendar.Mobile.ViewModels
         public ICommand LogoutCommand { get; set; }
 
         public MainPageViewModel(
-            AppSettingsManager appSettingsManager,
+            IAuthenticationService authenticationService,
             IPageDialogService dialogService,
             INavigationService navigationService)
             : base(navigationService)
         {
-            this.appSettingsManager = appSettingsManager ?? throw new ArgumentNullException(nameof(appSettingsManager));
+            this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
             this.dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 
             this.Title = "Main Page";
@@ -46,14 +46,18 @@ namespace MyCalendar.Mobile.ViewModels
         {
             try
             {
-                var authResult = await WebAuthenticator.AuthenticateAsync(
-                new Uri(this.appSettingsManager["Authorization:Address"] + this.appSettingsManager["Authorization:Endpoint"]),
-                new Uri(this.appSettingsManager["Authorization:Callback"] + "://"));
+                var result = await this.authenticationService.LoginAsync();
 
-                await SecureStorage.SetAsync("access_token", authResult?.AccessToken);
-                await SecureStorage.SetAsync("token_type", authResult?.Get("token_type"));
+                if (result != null)
+                {
+                    await SecureStorage.SetAsync("access_token", result);
 
-                this.LoggedIn = true;
+                    this.LoggedIn = true;
+                }
+                else
+                {
+                    throw new AuthenticationException("Could not authenticate user");
+                }
             }
             catch (Exception ex)
             {
@@ -65,30 +69,17 @@ namespace MyCalendar.Mobile.ViewModels
         {
             try
             {
-                var httpClientHandler = new HttpClientHandler
+                var result = await this.authenticationService.LogoutAsync();
+
+                if (result)
                 {
-                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
-                    {
-                        return true;
-                    },
-                };
+                    SecureStorage.Remove("accessToken");
 
-                using (var client = new HttpClient(httpClientHandler))
+                    this.LoggedIn = false;
+                }
+                else
                 {
-                    client.BaseAddress = new Uri(this.appSettingsManager["Authorization:Address"]);
-
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(await SecureStorage.GetAsync("token_type"), await SecureStorage.GetAsync("access_token"));
-
-                    var req = new HttpRequestMessage(HttpMethod.Post, this.appSettingsManager["Authorization:Endpoint"]);
-
-                    var resp = await client.SendAsync(req);
-
-                    if (resp.IsSuccessStatusCode)
-                    {
-                        SecureStorage.Remove("accessToken");
-
-                        this.LoggedIn = false;
-                    }
+                    throw new AuthenticationException("Could not logout user");
                 }
             }
             catch (Exception ex)
