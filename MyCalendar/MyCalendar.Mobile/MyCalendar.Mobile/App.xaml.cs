@@ -1,4 +1,5 @@
-﻿using MyCalendar.Mobile.ViewModels;
+﻿using MyCalendar.Mobile.Common.Services;
+using MyCalendar.Mobile.ViewModels;
 using MyCalendar.Mobile.Views;
 using Prism;
 using Prism.Ioc;
@@ -30,6 +31,8 @@ namespace MyCalendar.Mobile
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+
+            containerRegistry.RegisterSingleton<AppSettingsManager>();
         }
     }
 }

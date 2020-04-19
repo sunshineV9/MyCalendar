@@ -2,6 +2,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace MyCalendar.Api.Controllers
@@ -10,28 +14,68 @@ namespace MyCalendar.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        const string callbackScheme = "xamarinessentials";
+        private const string callbackScheme = "com.companyname.mycalendar";
 
-        [HttpGet]
-        [Route("login")]
-        public async Task Login(string returnUrl = "/")
+        private readonly ILoggerFactory logger;
+
+        public AccountController(ILoggerFactory logger)
         {
-            await Request.HttpContext.ChallengeAsync("Auth0", new AuthenticationProperties() { RedirectUri = returnUrl });
+            this.logger = logger ?? throw new System.ArgumentNullException(nameof(logger));
+        }
+
+        [HttpGet("{scheme}")]
+        public async Task Get([FromRoute]string scheme)
+        {
+            this.logger.CreateLogger($"login requested for scheme [{scheme}]...");
+
+            var auth = await Request.HttpContext.AuthenticateAsync(scheme);
+
+            if (!auth.Succeeded
+                || auth?.Principal == null
+                || !auth.Principal.Identities.Any(id => id.IsAuthenticated)
+                || string.IsNullOrEmpty(auth.Properties.GetTokenValue("access_token")))
+            {
+                this.logger.CreateLogger($"user not authorized, challenging endpoint...");
+
+                await Request.HttpContext.ChallengeAsync(scheme);
+            }
+            else
+            {
+                this.logger.CreateLogger($"user authorized, creating callback url...");
+
+                var qs = new Dictionary<string, string>
+                {
+                    { "token_type", auth.Properties.GetTokenValue("token_type") },
+                    { "access_token", auth.Properties.GetTokenValue("access_token") },
+                    { "refresh_token", auth.Properties.GetTokenValue("refresh_token") ?? string.Empty },
+                    { "expires", (auth.Properties.ExpiresUtc?.ToUnixTimeSeconds() ?? -1).ToString() }
+                };
+
+                var url = callbackScheme + "://#" + string.Join(
+                    "&",
+                    qs.Where(kvp => !string.IsNullOrEmpty(kvp.Value) && kvp.Value != "-1")
+                    .Select(kvp => $"{WebUtility.UrlEncode(kvp.Key)}={WebUtility.UrlEncode(kvp.Value)}"));
+
+                Request.HttpContext.Response.Redirect(url);
+            }
+
+            this.logger.CreateLogger($"login successfully processed for scheme [{scheme}]");
         }
 
         [Authorize]
-        [HttpPost]
-        [Route("logout")]
-        public async Task Logout()
+        [HttpPost("{scheme}")]
+        public async Task Logout([FromRoute]string scheme)
         {
-            await this.HttpContext.SignOutAsync("Auth0", new AuthenticationProperties
+            this.logger.CreateLogger($"logout requested for scheme [{scheme}]");
+
+            await this.HttpContext.SignOutAsync(scheme, new AuthenticationProperties
             {
-                // Indicate here where Auth0 should redirect the user after a logout.
-                // Note that the resulting absolute Uri must be whitelisted in the
-                // **Allowed Logout URLs** settings for the app.
-                RedirectUri = Url.Action("Index", "Home")
+                RedirectUri = callbackScheme + "://"
             });
+
             await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            this.logger.CreateLogger($"logout successfully processed for scheme [{scheme}]");
         }
     }
 }

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -65,8 +67,8 @@ namespace MyCalendar.Api
             // Add authentication services
             services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
             .AddCookie()
@@ -85,7 +87,7 @@ namespace MyCalendar.Api
                 // Configure the scope
                 options.Scope.Add("openid");
 
-                // Set the callback path, so Auth0 will call back to http://localhost:3000/callback
+                // Set the callback path, so Auth0 will call back to http://localhost:5000/callback
                 // Also ensure that you have added the URL as an Allowed Callback URL in your Auth0 dashboard
                 options.CallbackPath = new PathString("/callback");
 
@@ -127,6 +129,19 @@ namespace MyCalendar.Api
                             return Task.FromResult(0);
                         },
                 };
+            })
+            .AddJwtBearer(options =>
+            {
+                options.Authority = $"https://{Configuration["Auth0:Domain"]}";
+                options.Audience = $"https://{Configuration["Auth0:Audience"]}";
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes("Auth0", JwtBearerDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme)
+                    .Build();
             });
 
             services.AddControllers();
@@ -140,11 +155,11 @@ namespace MyCalendar.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
-            app.UseHsts();
-
-            app.UseAuthentication();
+            app.UseCookiePolicy();
 
             app.UseSwagger();
 
@@ -153,15 +168,14 @@ namespace MyCalendar.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyCalendar API V1");
             });
 
+            app.UseRouting();
+
             app.UseCors(c =>
                 c.AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials());
 
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

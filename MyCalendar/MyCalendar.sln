@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{1ED0D1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cloud", "Cloud", "{B6D83F4A-3D71-4280-A5CE-6BA875BF528A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCalendar.Mobile", "MyCalendar.Mobile\MyCalendar.Mobile\MyCalendar.Mobile.csproj", "{B3876853-018A-41F3-8DF2-CE325DEC5947}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCalendar.Mobile", "MyCalendar.Mobile\MyCalendar.Mobile\MyCalendar.Mobile.csproj", "{B3876853-018A-41F3-8DF2-CE325DEC5947}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCalendar.Mobile.Android", "MyCalendar.Mobile\MyCalendar.Mobile.Android\MyCalendar.Mobile.Android.csproj", "{8BBA777A-DD33-414E-866E-587F80DE1EE2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCalendar.Mobile.iOS", "MyCalendar.Mobile\MyCalendar.Mobile.iOS\MyCalendar.Mobile.iOS.csproj", "{6F45E815-D265-4E04-9EF8-7912A7E69471}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCalendar.Api", "MyCalendar.Api\MyCalendar.Api.csproj", "{99C8D5D1-D529-4272-986B-0325A6C08C10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCalendar.Api", "MyCalendar.Api\MyCalendar.Api.csproj", "{99C8D5D1-D529-4272-986B-0325A6C08C10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
