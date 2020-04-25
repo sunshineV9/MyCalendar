@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:MyCalendar.Mobile.Views.Login"
+             mc:Ignorable="d"
+             x:Class="MyCalendar.Mobile.Views.Login.LoginPage"
+             x:DataType="local:LoginPageViewModel">
+    <StackLayout Padding="12">
+        <Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand" 
+                   Text="Welcome to my little squeezy funny app!"
+                   FontSize="Title" 
+                   LineBreakMode="WordWrap"/>
+
+        <!-- Log In / Sign Up for the user -->
+        <Button HorizontalOptions="FillAndExpand" VerticalOptions="End"
+                Command="{Binding LoginCommand}"
+                Text="Log In" />
+    </StackLayout>
+</ContentPage>
