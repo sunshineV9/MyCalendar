@@ -15,17 +15,7 @@ namespace MyCalendar.Mobile.Views.Login
         private readonly IAuthenticationService authenticationService;
         private readonly IPageDialogService dialogService;
 
-        private bool loggedIn;
-
-        public bool LoggedIn
-        {
-            get { return loggedIn; }
-            set { SetProperty(ref loggedIn, value); }
-        }
-
         public ICommand LoginCommand { get; set; }
-
-        public ICommand LogoutCommand { get; set; }
 
         public LoginPageViewModel(
             IAuthenticationService authenticationService,
@@ -36,21 +26,16 @@ namespace MyCalendar.Mobile.Views.Login
             this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
             this.dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 
-            this.Title = "Main Page";
-
-            this.LoginCommand = new Command(async () => await LoginAsync());
-            this.LogoutCommand = new Command(async () => await LogoutAsync());
+            this.LoginCommand = new Command(async () => await LoginUserAsync());
         }
 
-        private async Task LoginAsync()
+        private async Task LoginUserAsync()
         {
             try
             {
-                this.LoggedIn = await this.authenticationService.LoginAsync();
-
-                if (this.LoggedIn)
+                if (await this.authenticationService.LoginAsync())
                 {
-                    await this.NavigationService.NavigateAsync(NavigationConstants.HomePage);
+                    await NavigateToHomeAsync();
                 }
             }
             catch (Exception ex)
@@ -59,16 +44,9 @@ namespace MyCalendar.Mobile.Views.Login
             }
         }
 
-        private async Task LogoutAsync()
+        private async Task NavigateToHomeAsync()
         {
-            try
-            {
-                this.LoggedIn = !(await this.authenticationService.LogoutAsync());
-            }
-            catch (Exception ex)
-            {
-                await this.dialogService.DisplayAlertAsync("Logout failed", "Error on logout: " + ex.Message, "OK");
-            }
+            await this.NavigationService.NavigateAsync(NavigationConstants.HomePage);
         }
     }
 }

@@ -9,19 +9,23 @@ namespace MyCalendar.Mobile.Common.Services.Authentication
     {
         private readonly AppSettingsManager appSettingsManager;
 
+        private readonly string domain;
+        private readonly string clientId;
+
         public AuthenticationService(AppSettingsManager appSettingsManager)
         {
             this.appSettingsManager = appSettingsManager ?? throw new ArgumentNullException(nameof(appSettingsManager));
+
+            this.domain = this.appSettingsManager["Authorization:Domain"];
+            this.clientId = this.appSettingsManager["Authorization:ClientId"];
         }
 
         public async Task<bool> LoginAsync()
         {
-            var domain = this.appSettingsManager["Authorization:Domain"];
-            var clientId = this.appSettingsManager["Authorization:ClientId"];
             var endpoint = this.appSettingsManager["Authorization:LoginEndpoint"];
             var callback = this.appSettingsManager["Authorization:LoginCallback"];
 
-            var url = $"https://{domain}/{string.Format(endpoint, clientId, callback)}";
+            var url = $"https://{this.domain}/{string.Format(endpoint, this.clientId, callback)}";
 
             var authResult = await AuthenticateAsync(url, callback);
 
@@ -36,12 +40,10 @@ namespace MyCalendar.Mobile.Common.Services.Authentication
 
         public async Task<bool> LogoutAsync()
         {
-            var domain = this.appSettingsManager["Authorization:Domain"];
-            var clientId = this.appSettingsManager["Authorization:ClientId"];
             var endpoint = this.appSettingsManager["Authorization:LogoutEndpoint"];
             var callback = this.appSettingsManager["Authorization:LogoutCallback"];
 
-            var url = $"https://{domain}/{string.Format(endpoint, clientId, callback)}";
+            var url = $"https://{this.domain}/{string.Format(endpoint, this.clientId, callback)}";
 
             await AuthenticateAsync(url, callback);
 

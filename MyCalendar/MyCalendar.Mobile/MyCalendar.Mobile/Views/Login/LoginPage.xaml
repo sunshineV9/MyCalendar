@@ -3,17 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:converters="clr-namespace:MyCalendar.Mobile.Resources.Converters"
              xmlns:local="clr-namespace:MyCalendar.Mobile.Views.Login"
              mc:Ignorable="d"
              x:Class="MyCalendar.Mobile.Views.Login.LoginPage"
              x:DataType="local:LoginPageViewModel">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-    
     <StackLayout Padding="12">
         <Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand" 
                    Text="Welcome to my little squeezy funny app!"
@@ -22,16 +15,7 @@
 
         <!-- Log In / Sign Up for the user -->
         <Button HorizontalOptions="FillAndExpand" VerticalOptions="End"
-                IsVisible="{Binding LoggedIn, Converter={StaticResource InverseBoolConverter}}"
                 Command="{Binding LoginCommand}"
                 Text="Log In" />
-
-        <Button HorizontalOptions="FillAndExpand" VerticalOptions="End"
-                IsVisible="{Binding LoggedIn}"
-                Command="{Binding LogoutCommand}"
-                Text="Log Out" />
-
-        <Button HorizontalOptions="FillAndExpand" VerticalOptions="End"
-                    Text="Sign Up" />
     </StackLayout>
 </ContentPage>
