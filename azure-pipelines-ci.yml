@@ -36,6 +36,12 @@ jobs:
       outputDirectory: '$(outputDirectory)'
       configuration: '$(buildConfiguration)'
 
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'test'
+      projects: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.Test/MyCalendar.Mobile.Test.csproj'
+      arguments: '--configuration $(buildConfiguration)'
+
   - task: AndroidSigning@3
     inputs:
       apkFiles: '$(outputDirectory)/*.apk'
@@ -73,3 +79,9 @@ jobs:
       configuration: '$(buildConfiguration)'
       buildForSimulator: true
       packageApp: false
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'test'
+      projects: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.Test/MyCalendar.Mobile.Test.csproj'
+      arguments: '--configuration $(buildConfiguration)'
