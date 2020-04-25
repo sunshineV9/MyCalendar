@@ -44,4 +44,3 @@ namespace MyCalendar.Mobile.Droid
         }
     }
 }
-
