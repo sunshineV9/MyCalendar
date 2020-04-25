@@ -25,7 +25,7 @@ jobs:
 
   - task: MSBuild@1
     inputs:
-      solution: 'MyCalendar/MyCalendar.sln'
+      solution: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile/MyCalendar.Mobile.csproj'
       configuration: '$(buildConfiguration)'
 
   - task: DotNetCoreCLI@2
