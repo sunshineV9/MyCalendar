@@ -10,8 +10,8 @@ namespace MyCalendar.Mobile.Common.Services.Authentication
         /// <summary>
         /// Authenticates the user with the login endpoint from the backend
         /// </summary>
-        /// <returns>AccessToken returned from authentication provider</returns>
-        public Task<string> LoginAsync();
+        /// <returns>True if success, otherwise false</returns>
+        public Task<bool> LoginAsync();
 
         /// <summary>
         /// Calls the logout endpoint from the backend

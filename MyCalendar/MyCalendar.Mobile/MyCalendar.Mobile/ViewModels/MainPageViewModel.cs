@@ -2,10 +2,8 @@
 using Prism.Navigation;
 using Prism.Services;
 using System;
-using System.Security.Authentication;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace MyCalendar.Mobile.ViewModels
@@ -46,18 +44,7 @@ namespace MyCalendar.Mobile.ViewModels
         {
             try
             {
-                var result = await this.authenticationService.LoginAsync();
-
-                if (result != null)
-                {
-                    await SecureStorage.SetAsync("access_token", result);
-
-                    this.LoggedIn = true;
-                }
-                else
-                {
-                    throw new AuthenticationException("Could not authenticate user");
-                }
+                this.LoggedIn = await this.authenticationService.LoginAsync();
             }
             catch (Exception ex)
             {
@@ -69,18 +56,7 @@ namespace MyCalendar.Mobile.ViewModels
         {
             try
             {
-                var result = await this.authenticationService.LogoutAsync();
-
-                if (result)
-                {
-                    SecureStorage.Remove("accessToken");
-
-                    this.LoggedIn = false;
-                }
-                else
-                {
-                    throw new AuthenticationException("Could not logout user");
-                }
+                this.LoggedIn = !(await this.authenticationService.LogoutAsync());
             }
             catch (Exception ex)
             {
