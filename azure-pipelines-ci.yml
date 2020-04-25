@@ -14,8 +14,30 @@ variables:
   outputDirectory: '$(build.binariesDirectory)/$(buildConfiguration)'
 
 jobs:
+- job: build_codeBase
+  displayName: 'Shared'
+  steps:
+  - task: NuGetToolInstaller@1
+
+  - task: NuGetCommand@2
+    inputs:
+      restoreSolution: '**/*.sln'
+
+  - task: VSBuild@1
+    inputs:
+      solution: 'MyCalendar/MyCalendar.sln'
+      configuration: '$(buildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    name: UnitTests
+    inputs:
+      command: 'test'
+      projects: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.Test/MyCalendar.Mobile.Test.csproj'
+      arguments: '--configuration $(buildConfiguration)'
+
 - job: build_android
   displayName: 'Android'
+  dependsOn: build_codeBase
   steps:
   - task: NuGetToolInstaller@1
 
@@ -36,13 +58,6 @@ jobs:
       outputDirectory: '$(outputDirectory)'
       configuration: '$(buildConfiguration)'
 
-  - task: DotNetCoreCLI@2
-    name: UnitTests
-    inputs:
-      command: 'test'
-      projects: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.Test/MyCalendar.Mobile.Test.csproj'
-      arguments: '--configuration $(buildConfiguration)'
-
   - task: AndroidSigning@3
     inputs:
       apkFiles: '$(outputDirectory)/*.apk'
@@ -59,6 +74,7 @@ jobs:
 
 - job: build_iOS
   displayName: 'iOS'
+  dependsOn: build_codeBase
   steps:
   - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(Xamarin SDK Version)
     displayName: 'Select Xamarin SDK Version...'
@@ -80,10 +96,3 @@ jobs:
       configuration: '$(buildConfiguration)'
       buildForSimulator: true
       packageApp: false
-
-  - task: DotNetCoreCLI@2
-    name: UnitTests
-    inputs:
-      command: 'test'
-      projects: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.Test/MyCalendar.Mobile.Test.csproj'
-      arguments: '--configuration $(buildConfiguration)'
