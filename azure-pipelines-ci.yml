@@ -37,6 +37,7 @@ jobs:
       configuration: '$(buildConfiguration)'
 
   - task: DotNetCoreCLI@2
+    name: UnitTests
     inputs:
       command: 'test'
       projects: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.Test/MyCalendar.Mobile.Test.csproj'
@@ -81,6 +82,7 @@ jobs:
       packageApp: false
 
   - task: DotNetCoreCLI@2
+    name: UnitTests
     inputs:
       command: 'test'
       projects: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.Test/MyCalendar.Mobile.Test.csproj'
