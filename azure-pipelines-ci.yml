@@ -1,8 +1,3 @@
-# Xamarin.Android
-# Build a Xamarin.Android project.
-# Add steps that test, sign, and distribute an app, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/xamarin
-
 trigger:
 - master
 
@@ -40,8 +35,8 @@ jobs:
       outputDirectory: '$(outputDirectory)'
       configuration: '$(buildConfiguration)'
 
-- job: build_android
-  displayName: 'Android'
+- job: build_iOS
+  displayName: 'iOS'
   steps:
   # To manually select a Xamarin SDK version on the Microsoft-hosted macOS agent,
   # configure this task with the *Mono* version that is associated with the
