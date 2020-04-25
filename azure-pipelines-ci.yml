@@ -23,7 +23,7 @@ jobs:
     inputs:
       restoreSolution: '**/*.sln'
 
-  - task: VSBuild@1
+  - task: MSBuild@1
     inputs:
       solution: 'MyCalendar/MyCalendar.sln'
       configuration: '$(buildConfiguration)'
