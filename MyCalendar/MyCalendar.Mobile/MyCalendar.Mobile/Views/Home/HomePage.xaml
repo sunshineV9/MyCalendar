@@ -8,7 +8,9 @@
             mc:Ignorable="d"
             x:Class="MyCalendar.Mobile.Views.Home.HomePage"
             android:TabbedPage.IsSwipePagingEnabled="False"
-            android:TabbedPage.ToolbarPlacement="Bottom">
+            android:TabbedPage.BarSelectedItemColor="OrangeRed"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            BarBackgroundColor="White">
     <!--Pages can be added as references or inline-->
     <ContentPage IconImageSource="schedule.png" />
     <ContentPage IconImageSource="add.png" />
