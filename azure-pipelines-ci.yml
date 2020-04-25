@@ -23,11 +23,32 @@ jobs:
     inputs:
       restoreSolution: '**/*.sln'
 
+  - task: android-manifest-version@1
+    inputs:
+      sourcePath: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.Android/Properties/AndroidManifest.xml'
+      versionCodeOption: 'buildid'
+      versionCode: '$(Build.BuildNumber)'
+      printFile: false
+
   - task: XamarinAndroid@1
     inputs:
       projectFile: '**/*droid*.csproj'
       outputDirectory: '$(outputDirectory)'
       configuration: '$(buildConfiguration)'
+
+  - task: AndroidSigning@3
+    inputs:
+      apkFiles: '$(outputDirectory)/*.apk'
+      apksignerKeystoreFile: 'MyCalendar.keystore'
+      apksignerKeystorePassword: '$(keystore-password)'
+      apksignerKeystoreAlias: '$(key-alias)'
+      apksignerKeyPassword: '$(key-password)'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(outputDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
 
 - job: build_iOS
   displayName: 'iOS'
