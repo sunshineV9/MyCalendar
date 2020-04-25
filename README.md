@@ -5,7 +5,7 @@ The MyCalender App is for users, who want a productive app to schedule their app
 
 | Platform  | Build |
 | ------------- | ------------- |
-| Android  | [![Build Status](https://dev.azure.com/michael-gintenreiter/MyCalendar/_apis/build/status/MyCalendar%20CI?branchName=master&jobName=Android)](https://dev.azure.com/michael-gintenreiter/MyCalendar/_build/latest?definitionId=8&branchName=master)  |
+| Android  | [![Build Status](https://dev.azure.com/michael-gintenreiter/MyCalendar/_apis/build/status/MyCalendar%20CI?branchName=master)](https://dev.azure.com/michael-gintenreiter/MyCalendar/_build/latest?definitionId=9&branchName=master) |
 | iOS  | [![Build Status](https://dev.azure.com/michael-gintenreiter/MyCalendar/_apis/build/status/MyCalendar%20CI?branchName=master&jobName=iOS)](https://dev.azure.com/michael-gintenreiter/MyCalendar/_build/latest?definitionId=8&branchName=master)  |
 
 # Technology Stack
