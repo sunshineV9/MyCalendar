@@ -35,6 +35,18 @@ jobs:
       outputDirectory: '$(outputDirectory)'
       configuration: '$(buildConfiguration)'
 
+  - task: DownloadSecureFile@1
+    inputs:
+      secureFile: 'MyCalendar.keystore'
+
+  - task: AndroidSigning@3
+    inputs:
+      apkFiles: '**/*.apk'
+      apksignerKeystoreFile: 'MyCalendar.keystore'
+      apksignerKeystorePassword: '$(keystore-password)'
+      apksignerKeystoreAlias: '$(key-alias)'
+      apksignerKeyPassword: '$(key-password)'
+
   - task: AppCenterDistribute@3
     inputs:
       serverEndpoint: 'MyCalendar AppCenter'
