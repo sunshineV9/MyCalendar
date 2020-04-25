@@ -35,6 +35,16 @@ jobs:
       outputDirectory: '$(outputDirectory)'
       configuration: '$(buildConfiguration)'
 
+  - task: AppCenterDistribute@3
+    inputs:
+      serverEndpoint: 'MyCalendar AppCenter'
+      appSlug: 'MyCalendar/MyCalendar-Android'
+      appFile: '$(outputDirectory)'
+      symbolsOption: 'Android'
+      releaseNotesOption: 'input'
+      releaseNotesInput: 'Changelog'
+      destinationType: 'groups'
+
 - job: build_iOS
   displayName: 'iOS'
   steps:
