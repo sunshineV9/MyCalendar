@@ -20,15 +20,6 @@ jobs:
     inputs:
       restoreSolution: '**/*.sln'
 
-  - task: android-manifest-version@1
-    inputs:
-      sourcePath: MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.Android/Properties/AndroidManifest.xml
-      versionCodeOption: 'buildid'
-      versionCode: '$(Build.BuildNumber)'
-      versionCodeOffset: '0'
-      versionName: '1.0.$(Build.BuildId)'
-      printFile: false
-
   - task: XamarinAndroid@1
     inputs:
       projectFile: '**/*droid*.csproj'
@@ -51,15 +42,6 @@ jobs:
   - task: NuGetCommand@2
     inputs:
       restoreSolution: '**/*.sln'
-
-  - task: ios-bundle-version@1
-    inputs:
-      sourcePath: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.iOS/Info.plist'
-      versionCodeOption: 'buildid'
-      versionCode: '$(Build.BuildNumber)'
-      versionCodeOffset: '0'
-      versionName: '1.0.$(Build.BuildId)'
-      printFile: false
 
   - task: XamariniOS@2
     inputs:
