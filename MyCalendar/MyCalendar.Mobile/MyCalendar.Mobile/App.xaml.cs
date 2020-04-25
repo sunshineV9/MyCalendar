@@ -1,7 +1,8 @@
-﻿using MyCalendar.Mobile.Common.Services;
+﻿using MyCalendar.Mobile.Common.Constants;
+using MyCalendar.Mobile.Common.Services;
 using MyCalendar.Mobile.Common.Services.Authentication;
-using MyCalendar.Mobile.ViewModels;
-using MyCalendar.Mobile.Views;
+using MyCalendar.Mobile.Views.Home;
+using MyCalendar.Mobile.Views.Login;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -25,16 +26,25 @@ namespace MyCalendar.Mobile
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync(NavigationConstants.LoginPage);
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            RegisterNavigation(containerRegistry);
+            RegisterServices(containerRegistry);
+        }
+
+        private static void RegisterNavigation(IContainerRegistry containerRegistry)
+        {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<HomePage>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
+        }
 
+        private static void RegisterServices(IContainerRegistry containerRegistry)
+        {
             containerRegistry.RegisterSingleton<AppSettingsManager>();
-
             containerRegistry.RegisterSingleton<IAuthenticationService, AuthenticationService>();
         }
     }

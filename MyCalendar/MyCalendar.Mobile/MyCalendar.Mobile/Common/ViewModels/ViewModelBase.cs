@@ -1,9 +1,10 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
+using System.Threading.Tasks;
 
-namespace MyCalendar.Mobile.ViewModels
+namespace MyCalendar.Mobile.Common.ViewModels
 {
-    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible
+    public class ViewModelBase : BindableBase, IInitializeAsync, INavigationAware, IDestructible
     {
         private string _title;
 
@@ -16,8 +17,9 @@ namespace MyCalendar.Mobile.ViewModels
             NavigationService = navigationService;
         }
 
-        public virtual void Initialize(INavigationParameters parameters)
+        public virtual Task InitializeAsync(INavigationParameters parameters)
         {
+            return Task.CompletedTask;
         }
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)

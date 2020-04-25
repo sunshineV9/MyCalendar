@@ -1,4 +1,6 @@
-﻿using MyCalendar.Mobile.Common.Services.Authentication;
+﻿using MyCalendar.Mobile.Common.Constants;
+using MyCalendar.Mobile.Common.Services.Authentication;
+using MyCalendar.Mobile.Common.ViewModels;
 using Prism.Navigation;
 using Prism.Services;
 using System;
@@ -6,9 +8,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace MyCalendar.Mobile.ViewModels
+namespace MyCalendar.Mobile.Views.Login
 {
-    public class MainPageViewModel : ViewModelBase
+    public class LoginPageViewModel : ViewModelBase
     {
         private readonly IAuthenticationService authenticationService;
         private readonly IPageDialogService dialogService;
@@ -25,7 +27,7 @@ namespace MyCalendar.Mobile.ViewModels
 
         public ICommand LogoutCommand { get; set; }
 
-        public MainPageViewModel(
+        public LoginPageViewModel(
             IAuthenticationService authenticationService,
             IPageDialogService dialogService,
             INavigationService navigationService)
@@ -45,6 +47,11 @@ namespace MyCalendar.Mobile.ViewModels
             try
             {
                 this.LoggedIn = await this.authenticationService.LoginAsync();
+
+                if (this.LoggedIn)
+                {
+                    await this.NavigationService.NavigateAsync(NavigationConstants.HomePage);
+                }
             }
             catch (Exception ex)
             {
@@ -60,7 +67,7 @@ namespace MyCalendar.Mobile.ViewModels
             }
             catch (Exception ex)
             {
-                await this.dialogService.DisplayAlertAsync("Logout failed", "Error on login: " + ex.Message, "OK");
+                await this.dialogService.DisplayAlertAsync("Logout failed", "Error on logout: " + ex.Message, "OK");
             }
         }
     }

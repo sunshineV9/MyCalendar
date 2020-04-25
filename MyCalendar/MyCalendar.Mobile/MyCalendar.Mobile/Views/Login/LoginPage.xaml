@@ -1,16 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:MyCalendar.Mobile.Resources.Converters"
-             xmlns:local="clr-namespace:MyCalendar.Mobile.ViewModels"
-             x:Class="MyCalendar.Mobile.Views.MainPage"
-             x:DataType="local:MainPageViewModel"
-             Title="{Binding Title}">
+             xmlns:local="clr-namespace:MyCalendar.Mobile.Views.Login"
+             mc:Ignorable="d"
+             x:Class="MyCalendar.Mobile.Views.Login.LoginPage"
+             x:DataType="local:LoginPageViewModel">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    
     <StackLayout Padding="12">
         <Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand" 
                    Text="Welcome to my little squeezy funny app!"
@@ -31,5 +34,4 @@
         <Button HorizontalOptions="FillAndExpand" VerticalOptions="End"
                     Text="Sign Up" />
     </StackLayout>
-
 </ContentPage>
