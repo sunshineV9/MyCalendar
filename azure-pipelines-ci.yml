@@ -38,12 +38,13 @@ jobs:
 - job: build_iOS
   displayName: 'iOS'
   steps:
-  # To manually select a Xamarin SDK version on the Microsoft-hosted macOS agent,
-  # configure this task with the *Mono* version that is associated with the
-  # Xamarin SDK version that you need, and set the "enabled" property to true.
-  # See https://go.microsoft.com/fwlink/?linkid=871629
   - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(Xamarin SDK Version)
-    displayName: 'Select the Xamarin SDK version'
+    displayName: 'Select Xamarin SDK Version...'
+    enabled: true
+
+  - script: sudo xcode-select -s /Applications/Xcode_$(XCode Version).app/Contents/Developer
+    displayName: 'Select Xcode Version...'
+    enabled: true
 
   - task: NuGetToolInstaller@1
 
