@@ -9,6 +9,8 @@ trigger:
 pool:
   vmImage: 'macos-latest'
 
+name: $(Date:yyMMdd)$(Rev:rr)
+
 variables:
   buildConfiguration: 'Release'
   outputDirectory: '$(build.binariesDirectory)/$(buildConfiguration)'
