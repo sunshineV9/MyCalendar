@@ -8,9 +8,13 @@ namespace MyCalendar.Mobile.Common.ViewModels
     {
         private string _title;
 
+        private bool isBusy;
+
         protected INavigationService NavigationService { get; }
 
         public string Title { get => _title; set => SetProperty(ref _title, value); }
+
+        public bool IsBusy { get => isBusy; set => SetProperty(ref isBusy, value); }
 
         public ViewModelBase(INavigationService navigationService)
         {

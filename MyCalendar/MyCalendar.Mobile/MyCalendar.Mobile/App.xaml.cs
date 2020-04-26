@@ -1,7 +1,10 @@
 ﻿using MyCalendar.Mobile.Common.Constants;
 using MyCalendar.Mobile.Common.Services;
+using MyCalendar.Mobile.Common.Services.Appointment;
 using MyCalendar.Mobile.Common.Services.Authentication;
 using MyCalendar.Mobile.Views.Home;
+using MyCalendar.Mobile.Views.Home.TabPages.AddAppointment;
+using MyCalendar.Mobile.Views.Home.TabPages.Schedule;
 using MyCalendar.Mobile.Views.Login;
 using Prism;
 using Prism.Ioc;
@@ -41,12 +44,15 @@ namespace MyCalendar.Mobile
 
             containerRegistry.RegisterForNavigation<HomePage>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddAppointmentPage, AddAppointmentPageViewModel>();
+            containerRegistry.RegisterForNavigation<SchedulePage, SchedulePageViewModel>();
         }
 
         private static void RegisterServices(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<AppSettingsManager>();
             containerRegistry.RegisterSingleton<IAuthenticationService, AuthenticationService>();
+            containerRegistry.RegisterSingleton<IAppointmentService, AppointmentServiceMock>();
         }
     }
 }

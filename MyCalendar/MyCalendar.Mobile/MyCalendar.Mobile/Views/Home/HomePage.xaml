@@ -5,6 +5,8 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:effects="clr-namespace:MyCalendar.Mobile.Resources.Effects"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:addAppointment="clr-namespace:MyCalendar.Mobile.Views.Home.TabPages.AddAppointment"
+            xmlns:schedule="clr-namespace:MyCalendar.Mobile.Views.Home.TabPages.Schedule"
             xmlns:local="clr-namespace:MyCalendar.Mobile.Views.Home"
             mc:Ignorable="d"
             x:Class="MyCalendar.Mobile.Views.Home.HomePage"
@@ -16,7 +18,7 @@
         <effects:NoShiftEffect/>
     </TabbedPage.Effects>
     <!--Pages can be added as references or inline-->
-    <ContentPage IconImageSource="schedule.png" />
-    <ContentPage IconImageSource="add.png" />
+    <schedule:SchedulePage IconImageSource="schedule.png" />
+    <addAppointment:AddAppointmentPage IconImageSource="add.png" />
     <ContentPage IconImageSource="settings.png" />
 </TabbedPage>

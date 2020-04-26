@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:appointments="clr-namespace:MyCalendar.Mobile.Views.Home.TabPages.AddAppointment"
+             xmlns:local="clr-namespace:MyCalendar.Mobile.Views.Home.TabPages.Schedule"
+             mc:Ignorable="d"
+             x:Class="MyCalendar.Mobile.Views.Home.TabPages.Schedule.SchedulePage"
+             x:DataType="local:SchedulePageViewModel">
+    <ContentPage.Content>
+        <StackLayout Padding="12">
+            <!-- Title -->
+            <Label Text="Schedule" FontSize="Title" />
+
+            <RefreshView IsRefreshing="{Binding IsBusy}"
+                         Command="{Binding RefreshCommand}">
+                <CollectionView ItemsSource="{Binding Appointments}"
+                                SelectionMode="None"
+                                EmptyView="No appointments found!">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="appointments:AppointmentViewModel">
+                            <Frame Padding="0"
+                                   IsClippedToBounds="True"
+                                   HasShadow="True"
+                                   BorderColor="Black">
+                                <StackLayout Padding="8">
+                                    <Label Text="{Binding Title, StringFormat='Title: {0:N}'}" />
+                                    <Label Text="{Binding Location, StringFormat='Location: {0:N}'}" />
+                                    <Label Text="{Binding StartTime, StringFormat='Start: {0:F}'}" />
+                                    <Label Text="{Binding EndTime, StringFormat='End: {0:F}'}" />
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
