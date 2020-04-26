@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:MyCalendar.Mobile.Resources.Converters"
+             xmlns:local="clr-namespace:MyCalendar.Mobile.Views.Home.TabPages.AddAppointment"
+             mc:Ignorable="d"
+             x:Class="MyCalendar.Mobile.Views.Home.TabPages.AddAppointment.AddAppointmentPage"
+             x:DataType="local:AddAppointmentPageViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="12">
+            <!-- Title -->
+            <Label Text="New Appointment" FontSize="Title" />
+
+            <ScrollView>
+                <StackLayout>
+                    <!-- Basic informations-->
+                    <Entry Text="{Binding Title}" Placeholder="Title" />
+                    <Entry Text="{Binding Location}" Placeholder="Location" />
+
+                    <!-- Time informations -->
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="All day" FontSize="Body" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+                        <Switch IsToggled="{Binding AllDay}" HorizontalOptions="End" />
+                    </StackLayout>
+
+                    <Label Text="Start time" FontSize="Body" VerticalOptions="Center" IsEnabled="{Binding AllDay, Converter={StaticResource InverseBoolConverter}}" />
+                    <StackLayout Orientation="Horizontal" IsEnabled="{Binding AllDay, Converter={StaticResource InverseBoolConverter}}">
+                        <DatePicker Date="{Binding StartTime}" />
+                        <TimePicker Time="{Binding StartTime}" />
+                    </StackLayout>
+
+
+                    <Label Text="End time" FontSize="Body" VerticalOptions="Center" IsEnabled="{Binding AllDay, Converter={StaticResource InverseBoolConverter}}" />
+                    <StackLayout Orientation="Horizontal" IsEnabled="{Binding AllDay, Converter={StaticResource InverseBoolConverter}}">
+                        <DatePicker Date="{Binding EndTime}" />
+                        <TimePicker Time="{Binding EndTime}" />
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+
+            <!-- Submit new appointment -->
+            <Button Text="Submit" Command="{Binding SubmitCommand}" VerticalOptions="EndAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
