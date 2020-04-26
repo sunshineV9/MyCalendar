@@ -3,6 +3,7 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:effects="clr-namespace:MyCalendar.Mobile.Resources.Effects"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             xmlns:local="clr-namespace:MyCalendar.Mobile.Views.Home"
             mc:Ignorable="d"
@@ -11,6 +12,9 @@
             android:TabbedPage.BarSelectedItemColor="OrangeRed"
             android:TabbedPage.ToolbarPlacement="Bottom"
             BarBackgroundColor="White">
+    <TabbedPage.Effects>
+        <effects:NoShiftEffect/>
+    </TabbedPage.Effects>
     <!--Pages can be added as references or inline-->
     <ContentPage IconImageSource="schedule.png" />
     <ContentPage IconImageSource="add.png" />
