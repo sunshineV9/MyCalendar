@@ -29,11 +29,10 @@ jobs:
       configuration: '$(buildConfiguration)'
 
   - task: DotNetCoreCLI@2
-    name: UnitTests
     inputs:
-      command: 'test'
+      command: test
       projects: 'MyCalendar/MyCalendar.Mobile/MyCalendar.Mobile.Test/MyCalendar.Mobile.Test.csproj'
-      arguments: '--configuration $(buildConfiguration)'
+      arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
 - job: build_android
   displayName: 'Android'
