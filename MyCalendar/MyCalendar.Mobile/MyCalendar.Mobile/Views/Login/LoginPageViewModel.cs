@@ -29,6 +29,13 @@ namespace MyCalendar.Mobile.Views.Login
             this.LoginCommand = new Command(async () => await LoginUserAsync());
         }
 
+        public override async Task InitializeAsync(INavigationParameters parameters)
+        {
+            await base.InitializeAsync(parameters);
+
+            await LoginUserAsync();
+        }
+
         private async Task LoginUserAsync()
         {
             try

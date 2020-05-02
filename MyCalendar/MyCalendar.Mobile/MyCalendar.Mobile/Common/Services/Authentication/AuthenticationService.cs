@@ -1,11 +1,11 @@
-﻿using MyCalendar.Mobile.Common.Constants;
+﻿using IdentityModel.OidcClient;
 using System;
+using System.Security.Authentication;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 
 namespace MyCalendar.Mobile.Common.Services.Authentication
 {
-    class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly AppSettingsManager appSettingsManager;
 
@@ -22,39 +22,54 @@ namespace MyCalendar.Mobile.Common.Services.Authentication
 
         public async Task<bool> LoginAsync()
         {
-            var endpoint = this.appSettingsManager["Authorization:LoginEndpoint"];
-            var callback = this.appSettingsManager["Authorization:LoginCallback"];
+            var callbackUri = this.appSettingsManager["Authorization:LoginCallback"];
 
-            var url = $"https://{this.domain}/{string.Format(endpoint, this.clientId, callback)}";
-
-            var authResult = await AuthenticateAsync(url, callback);
-
-            if (!string.IsNullOrEmpty(authResult?.AccessToken))
+            var options = new OidcClientOptions
             {
-                await SecureStorage.SetAsync(StorageConstants.AccessToken, authResult?.AccessToken);
-                return true;
+                Authority = $"https://{this.domain}",
+                ClientId = this.clientId,
+                Scope = "openid profile email",
+                RedirectUri = callbackUri,
+                ResponseMode = OidcClientOptions.AuthorizeResponseMode.Redirect,
+                Flow = OidcClientOptions.AuthenticationFlow.AuthorizationCode,
+                Browser = new Browser()
+            };
+
+            var oidcClient = new OidcClient(options);
+            var result = await oidcClient.LoginAsync();
+
+            if (result.IsError)
+            {
+                throw new AuthenticationException(result.Error);
             }
 
-            return false;
+            return true;
         }
 
         public async Task<bool> LogoutAsync()
         {
-            var endpoint = this.appSettingsManager["Authorization:LogoutEndpoint"];
-            var callback = this.appSettingsManager["Authorization:LogoutCallback"];
+            var callbackUri = this.appSettingsManager["Authorization:LogoutCallback"];
 
-            var url = $"https://{this.domain}/{string.Format(endpoint, this.clientId, callback)}";
+            var options = new OidcClientOptions
+            {
+                Authority = $"https://{this.domain}",
+                ClientId = this.clientId,
+                Scope = "openid profile email",
+                RedirectUri = callbackUri,
+                ResponseMode = OidcClientOptions.AuthorizeResponseMode.Redirect,
+                Flow = OidcClientOptions.AuthenticationFlow.AuthorizationCode,
+                Browser = new Browser()
+            };
 
-            await AuthenticateAsync(url, callback);
+            var oidcClient = new OidcClient(options);
+            var result = await oidcClient.LogoutAsync(new LogoutRequest());
 
-            return SecureStorage.Remove(StorageConstants.AccessToken);
-        }
+            if (result.IsError)
+            {
+                throw new AuthenticationException(result.Error);
+            }
 
-        private Task<WebAuthenticatorResult> AuthenticateAsync(string url, string callback)
-        {
-            return WebAuthenticator.AuthenticateAsync(
-                new Uri(url),
-                new Uri(callback));
+            return true;
         }
     }
 }
