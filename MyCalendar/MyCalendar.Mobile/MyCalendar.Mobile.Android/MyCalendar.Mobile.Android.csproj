@@ -84,7 +84,7 @@
     <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.2.0.7" />
     <PackageReference Include="Xamarin.AndroidX.CardView" Version="1.0.0.8" />
     <PackageReference Include="Xamarin.AndroidX.MediaRouter" Version="1.1.0.5" />
-    <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1422" />
+    <PackageReference Include="Prism.Unity.Forms" Version="8.0.0.1909" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\WebAuthenticationCallbackActivity.cs" />
